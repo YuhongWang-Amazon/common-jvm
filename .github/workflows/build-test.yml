@@ -47,7 +47,7 @@ jobs:
           ${{ steps.get-cache-params.outputs.restore-key }}
 
     - name: Build
-      run: bazelisk build ///src/main/proto/wfa/measurement/common/testing:assemble-maven
+      run: bazelisk build //src/main/proto/wfa/measurement/common/testing:assemble-maven
 
 
     # Delete large files that are relatively cheap to re-create.
