@@ -269,6 +269,14 @@ use_repo(
 )
 
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+git_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
+git_repository(
+    name = "vaticle_bazel_distribution",
+    remote = "https://github.com/vaticle/bazel-distribution",
+    commit = "ebb4a9b342ec442c427705ec6a7919cce4c35c6e", # sync-marker: do not remove this comment, this is used for sync-dependencies by @vaticle_bazel_distribution
+)
+
 
 http_archive(
     name = "io_grpc_grpc_proto",
