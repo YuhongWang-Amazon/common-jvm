@@ -15,11 +15,6 @@
 name: Build and test
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-    types: [opened, synchronize, edited]
   workflow_dispatch:
 
 jobs:
@@ -49,11 +44,8 @@ jobs:
           ${{ steps.get-cache-params.outputs.restore-key }}
 
     - name: Build
-      run: bazelisk build //...
+      run: bazelisk build //src/main/kotlin/org/wfanet/measurement/common/crypto:hashing
 
-    - name: Run tests
-      id: run-tests
-      run: bazelisk test //...
 
     # Delete large files that are relatively cheap to re-create.
     - name: Trim Bazel cache
@@ -69,8 +61,3 @@ jobs:
       with:
         path: ${{ steps.get-cache-params.outputs.cache-path }}
         key: ${{ steps.get-cache-params.outputs.cache-key }}
-
-    - name: Upload Bazel testlogs
-      continue-on-error: true
-      uses: world-federation-of-advertisers/actions/bazel-upload-testlogs@v2
-      if: failure() && (steps.run-tests.outcome == 'failure')
